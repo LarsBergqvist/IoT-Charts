@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="app" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Chart.js </title>
+    <script src="/static/node_modules/angular/angular.js"></script>
+    <script src="/static/node_modules/chart.js/Chart.min.js"></script>
+    <script src="/static/node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+    <script src="/static/app.js"></script>
+    </head>
+    <body>
+<h1>Flask Chart.js</h1>
+<div ng-controller="ChartCtrl">
+<div ng-repeat="item in data">
+<h1 ng-bind="titles[$index]"></h1>
+    <canvas id="line" class="chart chart-line" chart-data="data[$index]" 
+        chart-labels="labels[$index]" chart-series="series" chart-options="options"" chart-dataset-override="item.datasetOverride" chart-click="onClick">
+</canvas>
+</div>
+
+</div>
+
+</body></html>
