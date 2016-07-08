@@ -53,7 +53,10 @@ labels: {
     }
 };
 
-
+  $scope.onClick = function (points, evt) {
+    console.log(points, evt);
+  };
+  
 getData('/api/Outdoor/Temperature');
 getData('/api/GroundFloor/Temperature');
 getData('/api/Garage/Temperature');
