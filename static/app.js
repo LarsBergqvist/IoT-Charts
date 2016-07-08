@@ -11,10 +11,9 @@ $http({
   method: 'GET',
   url: url
 }).then(function successCallback(response) {
-        var data1 = [response.data.measurements.values];
-        $scope.data.push(data1)
+        $scope.data.push([response.data.measurements.values])
         $scope.labels.push(response.data.measurements.labels)
-        $scope.titles.push(url)
+        $scope.titles.push(url.replace("/api/",""))
 
 
   }, function errorCallback(response) {
@@ -25,8 +24,8 @@ $http({
 $scope.data = []
 $scope.labels = []
 $scope.titles = []
-$scope.series = ['Series A'];
-$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+$scope.series = ['Sensor'];
+$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
 $scope.options = {
     scales: {
         xAxes: [{
@@ -42,12 +41,6 @@ labels: {
         type: 'linear',
         display: true,
         position: 'left'
-        },
-        {
-        id: 'y-axis-2',
-        type: 'linear',
-        display: true,
-        position: 'right'
         }
     ]
     }
@@ -56,9 +49,12 @@ labels: {
   $scope.onClick = function (points, evt) {
     console.log(points, evt);
   };
-  
+
 getData('/api/Outdoor/Temperature');
 getData('/api/GroundFloor/Temperature');
 getData('/api/Garage/Temperature');
+getData('/api/Outdoor/Humidity');
+getData('/api/GroundFloor/Humidity');
+getData('/api/Garage/Humidity');
 
 });

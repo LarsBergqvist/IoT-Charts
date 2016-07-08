@@ -12,7 +12,7 @@ def get_data(topic_name):
     mongoClient=MongoClient()
     db=mongoClient.SensorData
     collection=db.home_data
-    yesterday=datetime.today() - timedelta(1)
+    yesterday=datetime.today() - timedelta(2)
     cursor = db.home_data.find({"topic":topic_name,"time":{"$gte":yesterday}})
 
     values = []
@@ -33,24 +33,12 @@ def index():
 
     return render_template('index.html')
 
-@app.route("/api/Outdoor/Temperature")
-def get_OutdoorTemperature():
-
-    labels, values = get_data("Home/Outdoor/Temperature")
-
-    return jsonify({"measurements":{'labels':labels,'values':values}})
-
-@app.route("/api/GroundFloor/Temperature")
-def get_IndoorTemperature():
-
-    labels, values = get_data("Home/GroundFloor/Temperature")
-
-    return jsonify({"measurements":{'labels':labels,'values':values}})
-
-@app.route("/api/Garage/Temperature")
-def get_GarageTemperature():
-
-    labels, values = get_data("Home/Garage/Temperature")
+@app.route('/<path:path>')
+def catch_all(path):
+    
+    topic = path.replace("api","Home")
+    print(topic)
+    labels, values = get_data(topic)
 
     return jsonify({"measurements":{'labels':labels,'values':values}})
  
