@@ -11,6 +11,9 @@
     <body>
 <h1>Sensor data</h1>
 <div ng-controller="ChartCtrl">
+    <label>Number of days:
+      <input type="number" min="1" ng-change="numdaysChanged()" ng-model="numdays" />
+  </label>
 <div ng-repeat="item in data">
 <h2 ng-bind="titles[$index]"></h2>
     <canvas id="line" class="chart chart-line" chart-data="data[$index]" 

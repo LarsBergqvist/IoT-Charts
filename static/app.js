@@ -6,18 +6,22 @@ var myApp = angular.module('app', ["chart.js"])
 
 myApp.controller("ChartCtrl", function ($scope,$http) {
 
-    var lastVal = function(array, n) {  
-    if (array == null)   
-        return void 0;  
-    if (n == null)   
-        return array[array.length - 1];  
-    return array.slice(Math.max(array.length - n, 0));    
+    $scope.numdaysChanged = function() {
+        requestNewData();
     };
 
-    var getData = function(url) {
+    var lastVal = function(array, n) {  
+        if (array == null)   
+            return void 0;  
+        if (n == null)   
+            return array[array.length - 1];  
+        return array.slice(Math.max(array.length - n, 0));    
+    };
+
+    var getData = function(url,numdays) {
         $http({
             method: 'GET',
-            url: url
+            url: url + "/" + numdays
             }).then(function successCallback(response) {
                     values = response.data.measurements.values;
                     labels = response.data.measurements.labels;
@@ -31,29 +35,35 @@ myApp.controller("ChartCtrl", function ($scope,$http) {
         });
     };
 
-    $scope.data = [];
-    $scope.labels = [];
-    $scope.titles = [];
-    $scope.series = ['Sensor'];
-    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
-    $scope.options = {
-        scales: {
-            yAxes: [
-                {
-                id: 'y-axis-1',
-                type: 'linear',
-                display: true,
-                position: 'left'
-                }
-            ]
-        }
+    $scope.numdays = 1;
+
+    var requestNewData = function() {
+        $scope.data = [];
+        $scope.labels = [];
+        $scope.titles = [];
+        $scope.series = ['Sensor'];
+        $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+        $scope.options = {
+            scales: {
+                yAxes: [
+                    {
+                    id: 'y-axis-1',
+                    type: 'linear',
+                    display: true,
+                    position: 'left'
+                    }
+                ]
+            }
+        };
+
+        getData('/api/Outdoor/Temperature',$scope.numdays);
+        getData('/api/GroundFloor/Temperature',$scope.numdays);
+        getData('/api/Garage/Temperature',$scope.numdays);
+        getData('/api/Outdoor/Humidity',$scope.numdays);
+        getData('/api/GroundFloor/Humidity',$scope.numdays);
+        getData('/api/Garage/Humidity',$scope.numdays);
     };
 
-    getData('/api/Outdoor/Temperature');
-    getData('/api/GroundFloor/Temperature');
-    getData('/api/Garage/Temperature');
-    getData('/api/Outdoor/Humidity');
-    getData('/api/GroundFloor/Humidity');
-    getData('/api/Garage/Humidity');
+    requestNewData();
 
 });

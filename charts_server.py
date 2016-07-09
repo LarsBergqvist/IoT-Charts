@@ -1,15 +1,15 @@
-from flask import Flask
-#from flask import Markup
 from flask import Flask, render_template, jsonify
 import pymongo
 from datetime import datetime, timedelta
 
-def get_data(topic_name):
-    # Set up client for MongoDB
+def get_data(topic_name, numdays):
+    if (numdays < 1):
+        numdays = 1
+
     mongoClient=pymongo.MongoClient()
     db=mongoClient.SensorData
     collection=db.home_data
-    yesterday=datetime.today() - timedelta(2)
+    yesterday=datetime.today() - timedelta(numdays)
     cursor = db.home_data.find({"topic":topic_name,"time":{"$gte":yesterday}}).sort("time",pymongo.ASCENDING)
 
     values = []
@@ -30,12 +30,11 @@ def index():
 
     return render_template('index.html')
 
-@app.route('/<path:path>')
-def catch_all(path):
-    
-    topic = path.replace("api","Home")
-    print(topic)
-    labels, values = get_data(topic)
+@app.route('/api/<string:location>/<string:measurement>/<int:numdays>')
+def get_measurements(location,measurement,numdays):
+
+    topic = "Home/" + location + "/" + measurement  
+    labels, values = get_data(topic,numdays)
 
     return jsonify({"measurements":{'labels':labels,'values':values}})
  
