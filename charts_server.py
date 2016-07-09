@@ -1,19 +1,16 @@
 from flask import Flask
-from flask import Markup
-from flask import Flask
-from flask import render_template
-from flask import jsonify
+#from flask import Markup
+from flask import Flask, render_template, jsonify
 import pymongo
-from pymongo import MongoClient
 from datetime import datetime, timedelta
 
 def get_data(topic_name):
     # Set up client for MongoDB
-    mongoClient=MongoClient()
+    mongoClient=pymongo.MongoClient()
     db=mongoClient.SensorData
     collection=db.home_data
     yesterday=datetime.today() - timedelta(2)
-    cursor = db.home_data.find({"topic":topic_name,"time":{"$gte":yesterday}})
+    cursor = db.home_data.find({"topic":topic_name,"time":{"$gte":yesterday}}).sort("time",pymongo.ASCENDING)
 
     values = []
     labels = []
