@@ -18,15 +18,15 @@ myApp.controller("ChartCtrl", function ($scope,$http) {
         return array.slice(Math.max(array.length - n, 0));    
     };
 
-    var getData = function(url,numdays) {
+    var getData = function(index,url,numdays) {
         $http({
             method: 'GET',
             url: url + "/" + numdays
             }).then(function successCallback(response) {
                     values = response.data.measurements.values;
                     labels = response.data.measurements.labels;
-                    $scope.data.push([values]);
-                    $scope.labels.push(labels);
+                    $scope.data[index] = [values];
+                    $scope.labels[index] = labels;
                     title = url.replace("/api/","") + ": " + lastVal(values,1) + " (" + lastVal(labels,1) + ")";
                     $scope.titles.push(title);
 
@@ -56,12 +56,12 @@ myApp.controller("ChartCtrl", function ($scope,$http) {
             }
         };
 
-        getData('/api/Outdoor/Temperature',$scope.numdays);
-        getData('/api/GroundFloor/Temperature',$scope.numdays);
-        getData('/api/Garage/Temperature',$scope.numdays);
-        getData('/api/Outdoor/Humidity',$scope.numdays);
-        getData('/api/GroundFloor/Humidity',$scope.numdays);
-        getData('/api/Garage/Humidity',$scope.numdays);
+        getData(0,'/api/Outdoor/Temperature',$scope.numdays);
+        getData(1,'/api/GroundFloor/Temperature',$scope.numdays);
+        getData(2,'/api/Garage/Temperature',$scope.numdays);
+        getData(3,'/api/Outdoor/Humidity',$scope.numdays);
+        getData(4,'/api/GroundFloor/Humidity',$scope.numdays);
+        getData(5,'/api/Garage/Humidity',$scope.numdays);
     };
 
     requestNewData();
