@@ -3,6 +3,7 @@ from flask import Flask, render_template, jsonify, request
 from datetime import datetime, timedelta
 import sys
 import data_fake
+import data_mongodb
 
 app = Flask(__name__)
 
