@@ -18,11 +18,11 @@ def get_labels_and_values_for_topic(topic_name, numdays):
 
     return repo.get_data(repo,topic_name,numdays)
     
-@app.route("/")
+@app.route("/ChartData")
 def index():
     return render_template('index.html')
 
-@app.route('/api/<string:location>/<string:measurement>')
+@app.route('/ChartData/api/<string:location>/<string:measurement>')
 def get_measurements_as_labels_and_values(location,measurement):
 
     numdays = request.args.get('numdays', default=1, type=int)
