@@ -21,7 +21,7 @@ myApp.controller("ChartCtrl", function ($scope,$http) {
     var getData = function(index,url,numdays) {
         $http({
             method: 'GET',
-            url: url + "/" + numdays
+            url: url + "?numdays=" + numdays
             }).then(function successCallback(response) {
                     values = response.data.measurements.values;
                     labels = response.data.measurements.labels;
