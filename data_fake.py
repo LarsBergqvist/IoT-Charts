@@ -8,7 +8,7 @@ class FakeRepository(Repository):
 
         # Create some test data
         # Three values from yesterday and three values from today
-        data = ( 
+        dataPoint = ( 
             (20.1,today-timedelta(1.8)),
             (19.1,today-timedelta(1.4)),
             (22.1,today-timedelta(1.2)),
@@ -20,9 +20,9 @@ class FakeRepository(Repository):
         values = []
         labels = []
 
-        for a,b in data:
-            if (b > (today - timedelta(numdays))):
-                values.append(a)
-                labels.append(super(FakeRepository,self).date_formatted(b))
+        for value,time in dataPoint:
+            if (time > (today - timedelta(numdays))):
+                values.append(value)
+                labels.append(super(FakeRepository,self).date_formatted(time))
 
         return labels, values

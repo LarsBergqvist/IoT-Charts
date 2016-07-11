@@ -7,20 +7,19 @@
     <script src="/static/node_modules/chart.js/dist/Chart.min.js"></script>
     <script src="/static/node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
     <script src="/static/app.js"></script>
-    </head>
-    <body>
+</head>
+<body>
 <h1>Sensor data</h1>
 <div ng-controller="ChartCtrl">
     <label>Number of days:
       <input type="number" min="1" ng-change="numdaysChanged()" ng-model="numdays" />
-  </label>
-<div ng-repeat="item in data">
-<h2 ng-bind="titles[$index]"></h2>
-    <canvas id="line" class="chart chart-line" chart-data="data[$index]" 
-        chart-labels="labels[$index]" chart-series="series" chart-options="options"" chart-dataset-override="item.datasetOverride" chart-click="onClick">
-</canvas>
-</div>
-
+    </label>
+    <div ng-repeat="item in data">
+        <h2 ng-bind="titles[$index]"></h2>
+            <canvas id="line" class="chart chart-line" chart-data="data[$index]" 
+                chart-labels="labels[$index]" chart-series="series" chart-options="options"" chart-dataset-override="item.datasetOverride" chart-click="onClick">
+            </canvas>
+    </div>
 </div>
 
 </body></html>

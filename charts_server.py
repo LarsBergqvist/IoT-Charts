@@ -41,7 +41,7 @@ Fake = False
 
 if __name__ == "__main__":
     for arg in sys.argv:
-        if arg.lower() == "--FAKE".lower():
+        if arg.lower() == "--fake":
             print("Using fake data")
             Fake = True
 
