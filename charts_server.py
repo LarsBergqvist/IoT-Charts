@@ -11,7 +11,7 @@ def get_labels_and_values_for_topic(topic_name, numdays):
     if (numdays < 1):
         numdays = 1
 
-    if Fake == False:
+    if app.config['FAKE'] == False:
         repo = data_mongodb.MongoDBRepository
     else:
         repo = data_fake.FakeRepository
@@ -37,12 +37,12 @@ def get_measurements_as_labels_and_values(location,measurement):
     return jsonify({"measurements":{'labels':labels,'values':values}})
 
 
-Fake = False
-
 if __name__ == "__main__":
     for arg in sys.argv:
         if arg.lower() == "--fake":
             print("Using fake data")
-            Fake = True
+            app.config['FAKE'] = True
+        else:
+            app.config['FAKE'] = False
 
     app.run(host='0.0.0.0', port=6001,debug=False)
