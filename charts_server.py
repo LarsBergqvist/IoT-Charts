@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import sys
 import data_fake
 import data_mongodb
+from logger import logger
 
 app = Flask(__name__)
 

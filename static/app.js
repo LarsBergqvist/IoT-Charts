@@ -62,6 +62,9 @@ myApp.controller("ChartCtrl", function ($scope,$http) {
         getData(3,'Outdoor/Humidity',$scope.numdays);
         getData(4,'GroundFloor/Humidity',$scope.numdays);
         getData(5,'Garage/Humidity',$scope.numdays);
+        getData(6,'TopFloor/Temperature',$scope.numdays);
+        getData(7,'TopFloor/Pressure',$scope.numdays);
+//    	getData(6,'Frontdoor/Opened',$scope.numdays);
     };
 
     requestNewData();
