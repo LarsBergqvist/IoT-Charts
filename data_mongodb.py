@@ -12,8 +12,11 @@ class MongoDBRepository(Repository):
         values = []
         labels = []
 
+        count = 0
         for r in cursor:
-            values.append(r['value'])
-            labels.append(super(MongoDBRepository,self).date_formatted(r['time']))
+            if count % int( (numdays/10)*(numdays/10) + 1) == 0:
+                values.append(r['value'])
+                labels.append(super(MongoDBRepository,self).date_formatted(r['time']))
+            count = count + 1
 
         return labels, values
