@@ -4,7 +4,8 @@ from datetime import datetime, timedelta
 import sys
 import data_fake
 import data_mongodb
-from logger import logger
+#from logger import logger
+import data_influxdb
 
 app = Flask(__name__)
 
@@ -13,8 +14,14 @@ def get_labels_and_values_for_topic(topic_name, numdays):
         numdays = 1
 
     if app.config['FAKE'] == False:
-        repo = data_mongodb.MongoDBRepository
+        if app.config['DB'] == 'MongoDB':
+            print("Using MongoDB repository")
+            repo = data_mongodb.MongoDBRepository
+        else:
+            print("Using InfluxDB repository")
+            repo = data_influxdb.InfluxDBRepository
     else:
+        print("Using fake repository")
         repo = data_fake.FakeRepository
 
     return repo.get_data(repo,topic_name,numdays)
@@ -39,11 +46,12 @@ def get_measurements_as_labels_and_values(location,measurement):
 
 
 if __name__ == "__main__":
+    app.config['FAKE'] = False
+    app.config['DB'] = 'InfluxDB'
     for arg in sys.argv:
         if arg.lower() == "--fake":
-            print("Using fake data")
             app.config['FAKE'] = True
-        else:
-            app.config['FAKE'] = False
+        elif arg.lower() == "--mongodb":
+            app.config['DB'] = 'MongoDB'
 
-    app.run(host='0.0.0.0', port=6001,debug=False)
+    app.run(host='0.0.0.0', port=6001,debug=True)
