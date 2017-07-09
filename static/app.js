@@ -18,17 +18,17 @@ myApp.controller("ChartCtrl", function ($scope,$http) {
         return array.slice(Math.max(array.length - n, 0));    
     };
 
-    var getData = function(index,topic,numdays) {
+    var getData = function(topic,numdays) {
         $http({
             method: 'GET',
             url: "/ChartData/api/" + topic  + "?numdays=" + numdays
             }).then(function successCallback(response) {
                     values = response.data.measurements.values;
                     labels = response.data.measurements.labels;
-                    $scope.data[index] = [values];
-                    $scope.labels[index] = labels;
+                    $scope.data = [values];
+                    $scope.labels = labels;
                     title = topic + ": " + lastVal(values,1) + " (" + lastVal(labels,1) + ")";
-                    $scope.titles.push(title);
+                    $scope.title = title;
 
 
             }, function errorCallback(response) {
@@ -75,7 +75,7 @@ myApp.controller("ChartCtrl", function ($scope,$http) {
             }
         };
 
-        getData(0,$scope.selectedTopic,$scope.numdays);
+        getData($scope.selectedTopic,$scope.numdays);
     };
 
     getTopics();

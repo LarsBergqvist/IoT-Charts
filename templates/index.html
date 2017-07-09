@@ -17,12 +17,10 @@
     <select class="form-control" ng-change="topicChanged()" ng-model="selectedTopic">
        <option ng-repeat="t in topics" value="[[t]]">[[t]]</option>
     </select>
-    <div ng-repeat="item in data">
-        <h2 ng-bind="titles[$index]"></h2>
-            <canvas id="line" class="chart chart-line" chart-data="data[$index]" 
-                chart-labels="labels[$index]" chart-series="series" chart-options="options"" chart-dataset-override="item.datasetOverride" chart-click="onClick">
-            </canvas>
-    </div>
+    <h2 ng-bind="title"></h2>
+    <canvas id="line" class="chart chart-line" chart-data="data" 
+        chart-labels="labels" chart-series="series" chart-options="options"" chart-dataset-override="item.datasetOverride" chart-click="onClick">
+    </canvas>
 </div>
 
 </body></html>
