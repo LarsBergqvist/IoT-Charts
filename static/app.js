@@ -37,7 +37,26 @@ myApp.controller("ChartCtrl", function ($scope,$http) {
 
     $scope.numdays = 1;
 
-    var requestNewData = function() {
+    var getTopics = function() {
+        $scope.topics = [
+            'Outdoor/Temperature',
+            'GroundFloor/Temperature',
+            'TopFloor/Temperature',
+            'Garden/Temperature',
+            'Garage/Temperature',
+            'TopFloor/Pressure',
+            'Outdoor/Humidity',
+            'GroundFloor/Humidity',
+            'Garage/Humidity',
+            'FrontDoor/Status'
+        ];
+    };
+
+    $scope.topicChanged = function () {
+        requestNewData();
+    }
+
+    var requestNewData = function(selectedTopic) {
         $scope.data = [];
         $scope.labels = [];
         $scope.titles = [];
@@ -56,17 +75,11 @@ myApp.controller("ChartCtrl", function ($scope,$http) {
             }
         };
 
-        getData(0,'Outdoor/Temperature',$scope.numdays);
-        getData(1,'GroundFloor/Temperature',$scope.numdays);
-        getData(2,'Garage/Temperature',$scope.numdays);
-        getData(3,'Outdoor/Humidity',$scope.numdays);
-        getData(4,'GroundFloor/Humidity',$scope.numdays);
-        getData(5,'Garage/Humidity',$scope.numdays);
-        getData(6,'TopFloor/Temperature',$scope.numdays);
-        getData(7,'TopFloor/Pressure',$scope.numdays);
-//    	getData(6,'Frontdoor/Opened',$scope.numdays);
+        getData(0,$scope.selectedTopic,$scope.numdays);
     };
 
+    getTopics();
+    $scope.selectedTopic = 'Outdoor/Temperature';
     requestNewData();
 
 });
