@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from repository_base import Repository
 
 class MongoDBRepository(Repository):
-    def get_data(self,topic_name, numdays):
+    def get_data(self,topic_name,numdays,utcOffsetInMinutes):
         mongoClient=pymongo.MongoClient()
         db=mongoClient.SensorData
         yesterday=datetime.today() - timedelta(numdays)

@@ -9,7 +9,7 @@ import data_influxdb
 
 app = Flask(__name__)
 
-def get_labels_and_values_for_topic(topic_name, numdays):
+def get_labels_and_values_for_topic(topic_name, numdays,utcOffsetInMinutes):
     if (numdays < 1):
         numdays = 1
 
@@ -24,7 +24,7 @@ def get_labels_and_values_for_topic(topic_name, numdays):
         print("Using fake repository")
         repo = data_fake.FakeRepository
 
-    return repo.get_data(repo,topic_name,numdays)
+    return repo.get_data(repo,topic_name,numdays,utcOffsetInMinutes)
     
 @app.route("/ChartData")
 def index():
@@ -34,13 +34,14 @@ def index():
 def get_measurements_as_labels_and_values(location,measurement):
 
     numdays = request.args.get('numdays', default=1, type=int)
+    utcOffsetInMinutes = request.args.get('utcOffset', default=0, type=int)
 
     topic = "Home/" + location + "/" + measurement
     # Get all measurements that matches a specific topic from the database
     # Fetch data from today and numdays backwards in time
     # The measurements are split into two arrays, one with measurement times (=labels)
     # and one with the actual values.
-    labels, values = get_labels_and_values_for_topic(topic,numdays)
+    labels, values = get_labels_and_values_for_topic(topic,numdays,utcOffsetInMinutes)
 
     return jsonify({"measurements":{'labels':labels,'values':values}})
 

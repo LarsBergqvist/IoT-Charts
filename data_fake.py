@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from repository_base import Repository
 
 class FakeRepository(Repository):
-    def get_data(self,topic_name, numdays):
+    def get_data(self,topic_name,numdays,utcOffsetInMinutes):
 
         today=datetime.today()
 
@@ -14,7 +14,8 @@ class FakeRepository(Repository):
             (22.1,today-timedelta(1.2)),
             (23.3,today-timedelta(0.9)),
             (19.1,today-timedelta(0.5)),
-            (30.1,today-timedelta(0.1))
+            (30.1,today-timedelta(0.1)),
+            (29.1,today)
         )
 
         values = []

@@ -6,5 +6,5 @@ class Repository:
     def date_formatted(date):
         return date.strftime('%d %b %H:%M')
 
-    def get_data(self,topic_name, numdays):
+    def get_data(self,topic_name, numdays,utcOffsetInMinutes):
         raise NotImplementedError( "Should have implemented this" )

@@ -19,9 +19,11 @@ myApp.controller("ChartCtrl", function ($scope,$http) {
     };
 
     var getData = function(topic,numdays) {
+
+        var utcOffsetInMinutes = new Date().getTimezoneOffset();
         $http({
             method: 'GET',
-            url: "/ChartData/api/" + topic  + "?numdays=" + numdays
+            url: "/ChartData/api/" + topic  + "?numdays=" + numdays + "&utcOffset=" + utcOffsetInMinutes
             }).then(function successCallback(response) {
                     values = response.data.measurements.values;
                     labels = response.data.measurements.labels;
